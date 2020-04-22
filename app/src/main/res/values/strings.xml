@@ -1,0 +1,153 @@
+<resources>
+    <string name="app_name">Park it</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_notifications">Notifications</string>
+
+
+
+    <string name="login_title">Log In</string>
+    <string name="login_phone_hint">Phone number</string>
+    <string name="login_password_hint">Password</string>
+    <string name="bu_login">Log In</string>
+    <string name="bu_sign_up_now">DON\'T HAVE AN ACCOUNT? SIGN UP NOW</string>
+
+
+
+    <string name="signup_title">Create Account</string>
+    <string name="signup_first_name_hint">First Name</string>
+    <string name="signup_father_name_hint">Father Name</string>
+    <string name="signup_family_name_hint">Family Name</string>
+    <string name="signup_email_hint">Email</string>
+    <string name="signup_password_hint">Password</string>
+    <string name="signup_con_password_hint">Confirm Password</string>
+    <string name="bu_next">NEXT</string>
+    <string name="bu_login_in_signup">ALREADY HAVE AN ACCOUNT? LOG IN NOW</string>
+
+
+
+    <string name="main_text_welcome">Welcome name ^^</string>
+    <string name="bu_find_parking">Reserve Your Parking Spot Now!</string>
+    <string name="main_how_to">It\'s simple:\n1-Click On the button below\n2-Select the time you wish to start your reservation\n3-get your code and remember it (you will use it later)\n4-when you want to check out go to checkout\nand that\'s it ^^</string>
+
+
+
+    <string name="note1_title">Stay Home</string>
+    <string name="note1_content">Park it family is sorry to announce you that it\'s out of service till the end of curfew and quarantine, stay tuned as we will announce a lot of surprises, and #stay_home</string>
+    <string name="note1_date">1st april, 2020</string>
+
+    <string name="note2_title">A special message for you</string>
+    <string name="note2_content">As you are part of our family, it\'s one of our priorities to make sure you are safe, please do the following to stay safe:\n1-Wash your hands frequently for 20 seconds\n2-Don\'t shake hands\n3-Keep a 2 meters distance at least between you and anyone else</string>
+    <string name="note2_date">31st march, 2020</string>
+
+    <string name="note3_title">Stay tuned!</string>
+    <string name="note3_content">A new 3 Parkings will be added! stay tuned to know once we announce it, and share this with your friends ^^ #Stay_tuned</string>
+    <string name="note3_date">30th march, 2020</string>
+
+    <string name="note4_title">Join us on Social media</string>
+    <string name="note4_content">Facebook.com/JUSTParkIt\nInstagram.com/JUSTPartIt\n#Park_it</string>
+    <string name="note4_date">23d march, 2020</string>
+
+    <string name="note5_title">Park it is officially lunched !</string>
+    <string name="note5_content">We have lunched the app! as a result of 3 months continuous working this app is done! we worked hard to make it the best app ever, and you are part of it ^^</string>
+    <string name="note5_date">23d march, 2020</string>
+
+
+
+    <string name="label_google_sign_in">Firebase + Google Sign In</string>
+    <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
+
+    <string name="label_facebook_login">Firebase + Facebook Login</string>
+    <string name="desc_facebook_login">Use a Facebook Login credential to authenticate with Firebase.</string>
+
+    <string name="label_emailpassword">Email/Password Authentication</string>
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+
+    <string name="label_passwordless">Passwordless Authentication</string>
+    <string name="desc_passwordless">Use only an email to authenticate with Firebase.</string>
+
+    <string name="label_phone_auth">Phone Number Authentication</string>
+    <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
+
+    <string name="label_anonymous_auth">Anonymous Authentication</string>
+    <string name="desc_anonymous_auth">Sign in anonymously and then later upgrade to a full Firebase Auth user.</string>
+
+    <string name="label_custom_auth">Custom Authentication</string>
+    <string name="desc_custom_auth">Use a custom token signed by your own server to authenticate with Firebase.</string>
+
+    <string name="label_firebase_ui">FirebaseUI Auth</string>
+    <string name="desc_firebase_ui">Use the FirebaseUI-Android library to authenticate with Firebase.</string>
+
+    <string name="label_generic_idp">Generic OAuth</string>
+    <string name="desc_generic_idp">Use a generic OAuth identity provider, like Apple, Microsoft, Yahoo, or Twitter to authenticate with Firebase.</string>
+
+    <string name="hint_user_id">User ID</string>
+    <string name="get_custom_token">Get Token</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="send_link">Send Link</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Loading…</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_in">Signed In</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="token_null">Token: null</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="start_phone_auth">Send Code</string>
+    <string name="verify_phone_auth">Verify</string>
+    <string name="resend_phone_auth">Resend</string>
+    <string name="hint_phone_number">Phone Number ex: 07xxxxxxxx</string>
+    <string name="hint_verification_code">Verification Code (6-digits)</string>
+    <string name="status_code_sent">Code Sent</string>
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="instant_validation">(instant validation)</string>
+
+    <string name="firebase_status_fmt">Firebase UID: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+
+    <string name="facebook_status_fmt">Facebook User: %s</string>
+    <string name="facebook_title_text">Facebook Login</string>
+
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="emailpassword_title_text">Email and Password</string>
+
+    <string name="passwordless_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="passwordless_title_text">Passwordless Sign In</string>
+    <string name="status_email_not_sent">Send link to your email to get started.</string>
+    <string name="status_email_sent">Link sent, check your email to continue.</string>
+    <string name="status_link_found">Link received, enter email to sign in.</string>
+
+    <string name="phone_title_text">Phone Number</string>
+
+    <string name="twitter_status_fmt">Twitter User: %s</string>
+    <string name="twitter_title_text">Twitter Login</string>
+
+    <string name="firebaseui_status_fmt">Firebase User: %s</string>
+    <string name="firebaseui_title_text">FirebaseUI Auth</string>
+
+    <string name="generic_title_text">OAuth Sign In</string>
+    <string name="generic_signin_fmt">Sign In with %s</string>
+    <string name="generic_status_fmt">User: %s (%s)</string>
+    <string name="generic_label_provider">Provider:</string>
+
+    <string name="id_fmt">User ID: %s</string>
+    <string name="email_fmt">Email: %s</string>
+
+    <string name="custom_auth_signin_status_user">User ID: %s</string>
+    <string name="custom_auth_signin_status_failed">Error: sign in failed</string>
+
+    <string name="error_sign_in_failed">Sign in failed, see logs for details.</string>
+
+
+
+</resources>
