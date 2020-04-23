@@ -6,6 +6,7 @@ import android.os.CountDownTimer
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
@@ -17,8 +18,13 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.just.parkit.SplashActivity.Companion.familyName
 import com.just.parkit.SplashActivity.Companion.fatherName
 import com.just.parkit.SplashActivity.Companion.firstName
+import com.just.parkit.SplashActivity.Companion.password
+import com.just.parkit.SplashActivity.Companion.phone
+import com.just.parkit.SplashActivity.Companion.prefs
+import com.just.parkit.SplashActivity.Companion.userState
 import com.just.parkit.models.User
 import kotlinx.android.synthetic.main.activity_signup_auth.buttonResend
 import kotlinx.android.synthetic.main.activity_signup_auth.buttonStartVerification
@@ -294,11 +300,20 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
             fieldPhoneNumber.text = null
             fieldVerificationCode.text = null
 
-            //todo make adduser to firebase here and delay and take him to main or don't save anything and takehim to login
 
-            addUser("","","","","")
-            //todo don't forget to save his num in var and shared pref
-            //todo get all data from shared pref
+            //shared preferences get and initializing
+            prefs = this.getSharedPreferences(SplashActivity.prefsFileName, MODE_PRIVATE)
+            firstName = prefs!!.getString("firstName", "").toString()
+            fatherName = prefs!!.getString("fatherName", "").toString()
+            familyName = prefs!!.getString("familyName", "").toString()
+            password = prefs!!.getString("password", "").toString()
+            phone = fieldPhoneNumber.text.toString()
+            prefs?.edit()?.putString("phone", phone)?.apply()
+            phone = prefs!!.getString("phone", "").toString()
+
+            //add the user to firebase
+            addUser(firstName,fatherName, familyName, phone, password)
+            //todo make adduser to firebase here and delay and take him to main or don't save anything and takehim to login
 
 
             //todo when you create signupactivity don't forget to save all vars in sharedpref
@@ -402,26 +417,43 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    //add the users to firebase function
     private fun addUser(firstName: String, fatherName: String, familyName: String, phoneNumber: String, password: String) {
-        // Create new user at /users/$userid
 
+        // Create new user at /users/$userid
         //the root reference
         val rootRef = Firebase.database.reference
         //create the push key
         val key = rootRef.child("user_id").push().key
         //if error generating the key
         if (key == null) {
-            Log.w(TAG, "Error registering please try again later ")
+            Toast.makeText(applicationContext, "Error registering please try again later", Toast.LENGTH_LONG).show()
+            Log.w(TAG, "Error registering please try again later")
             return
         }
 
+        //initialize the values and convert them to hash map type
         val user = User(firstName, fatherName, familyName, phoneNumber, password)
         val userValues = user.toMap()
 
+        //define the updates variable
         val childUpdates = HashMap<String, Any>()
         childUpdates["/users/$key"] = userValues
 
         rootRef.updateChildren(childUpdates)
+            .addOnSuccessListener {
+                // Write was successful!
+                userState = "1"
+
+                Toast.makeText(applicationContext, "Account created successfully ^_^", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+                // Write failed
+                userState = "0"
+
+                Toast.makeText(applicationContext, "Error registering please try again later", Toast.LENGTH_LONG).show()
+                Log.w(TAG, "Error registering please try again later")
+            }
     }
 
     companion object {

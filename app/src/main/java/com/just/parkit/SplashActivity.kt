@@ -18,12 +18,7 @@ class SplashActivity : AppCompatActivity() {
         // define var for signup sucess
         //0 means fail or signed out, 1 means success
         //2 means he entered phone and waiting for verification message, 3 means he is logged in
-        var signupsuccess: String? = null
-
-        // define var for signup result serverside
-        //0 means fail, 1 means success
-        //2 means user phone exists
-        var signupresult: String? = null
+        var userState: String? = null
 
 
         //user firstName
@@ -63,8 +58,8 @@ class SplashActivity : AppCompatActivity() {
 
         //sharedpreferences get
         prefs = this.getSharedPreferences(prefsFileName, MODE_PRIVATE)
-        signupresult = prefs!!.getString("signupresult", "")
-        signupsuccess = prefs!!.getString("signupsuccess", "")
+        userState = prefs!!.getString("signupresult", "")
+        userState = prefs!!.getString("signupsuccess", "")
 
     }
 
@@ -73,7 +68,7 @@ class SplashActivity : AppCompatActivity() {
 
         //check if user signup is successful if its not take him through the signup form else take him to the main activity
 
-        if (signupresult.isNullOrEmpty() || signupresult == "0" || signupresult == "2" || signupsuccess.isNullOrEmpty()) {
+        if (userState.isNullOrEmpty() || userState == "0" || userState == "2" || userState.isNullOrEmpty()) {
 
             //the delay on splash and goto first activity
             val background = object : Thread() {
@@ -93,7 +88,7 @@ class SplashActivity : AppCompatActivity() {
 
         }
 
-        else if (signupsuccess == "2") {
+        else if (userState == "2") {
 
             //the delay on splash and goto auth activity
             val background = object : Thread() {
@@ -101,7 +96,6 @@ class SplashActivity : AppCompatActivity() {
                     try {
                         Thread.sleep(2000)
 
-                        //todo turkish scholarship
                         //todo this was phoneauth activity
                         val intent = Intent(baseContext, MainActivity::class.java)
                         startActivity(intent)
