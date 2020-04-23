@@ -8,46 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:329566077020:android:3b432925dfda2d293f2699",
+        "mobilesdk_app_id": "1:329566077020:android:111bcbe41084134d3f2699",
         "android_client_info": {
           "package_name": "com.just.parkit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "329566077020-54o43l50e78eebv8i60i3orqtd91knn1.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCDraADTWdkl8US4s3lja6n8uYlcdoLx9k"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "329566077020-54o43l50e78eebv8i60i3orqtd91knn1.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:329566077020:android:2639c27aebcb34433f2699",
-        "android_client_info": {
-          "package_name": "com.obada.parkit"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "329566077020-6qa07sgq6dcng1vfsau1gkct8lo8iacn.apps.googleusercontent.com",
+          "client_id": "329566077020-cro591bvg7j7p6730jboa8o332lpf3p5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.obada.parkit",
+            "package_name": "com.just.parkit",
             "certificate_hash": "dda5601260588520c86227591cd5c59ae38453a5"
           }
         },

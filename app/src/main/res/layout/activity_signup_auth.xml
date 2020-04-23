@@ -119,6 +119,7 @@
             android:id="@+id/detail"
             style="@style/ThemeOverlay.MyTextDetail"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             android:padding="10dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"

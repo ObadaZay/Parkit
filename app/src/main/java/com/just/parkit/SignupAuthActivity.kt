@@ -15,6 +15,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.just.parkit.SplashActivity.Companion.fatherName
+import com.just.parkit.SplashActivity.Companion.firstName
+import com.just.parkit.models.User
 import kotlinx.android.synthetic.main.activity_signup_auth.buttonResend
 import kotlinx.android.synthetic.main.activity_signup_auth.buttonStartVerification
 import kotlinx.android.synthetic.main.activity_signup_auth.buttonVerifyPhone
@@ -47,6 +52,7 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
         buttonStartVerification.setOnClickListener(this)
         buttonVerifyPhone.setOnClickListener(this)
         buttonResend.setOnClickListener(this)
+
         // [START initialize_auth]
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -280,7 +286,7 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
         if (user == null) {
             // Signed out
 
-            //status.setText(R.string.signed_out)
+            //todo
         } else {
             // Signed in
 
@@ -290,10 +296,13 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
 
             //todo make adduser to firebase here and delay and take him to main or don't save anything and takehim to login
 
+            addUser("","","","","")
             //todo don't forget to save his num in var and shared pref
+            //todo get all data from shared pref
+
 
             //todo when you create signupactivity don't forget to save all vars in sharedpref
-            //status.setText(R.string.signed_in)
+
             //detail.text = getString(R.string.firebase_status_fmt, user.uid)
         }
     }
@@ -327,8 +336,8 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
                     return
                 }
 
-                startPhoneNumberVerification(fieldPhoneNumber.text.toString())
-
+                //using regex to replace first if equals to 0 or 962 with +962
+                startPhoneNumberVerification(fieldPhoneNumber.text.toString().replaceFirst("^0|962".toRegex(), "+962"))
 
                 buttonStartVerification?.setBackgroundColor(Color.parseColor("#66FFFFFF"))
                 buttonStartVerification?.isEnabled = false
@@ -365,33 +374,54 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
                 verifyPhoneNumberWithCode(storedVerificationId, code)
             }
             R.id.buttonResend -> {
-                resendVerificationCode(fieldPhoneNumber.text.toString(), resendToken)
+                resendVerificationCode(fieldPhoneNumber.text.toString().replaceFirst("^0|962".toRegex(), "+962"), resendToken)
 
 
                 //start timer for resend
                 val timer = object: CountDownTimer(80000, 10) {
                     override fun onTick(millisUntilFinished: Long) {
+                        buttonResend?.isEnabled = false
+                        buttonResend?.isClickable = false
                         buttonResend.text = "RESEND AFTER:" + millisUntilFinished / 1000
                         buttonResend?.setBackgroundColor(Color.parseColor("#66FFFFFF"))
                         buttonResend?.setTextColor(Color.parseColor("#FF006064"))
-                        buttonResend?.isEnabled = false
-                        buttonResend?.isClickable = false
+
                     }
 
                     override fun onFinish() {
                         buttonResend?.text = "RESEND"
-                        buttonResend?.setBackgroundColor(Color.parseColor("#E6FFFFFF"))
-                        buttonResend?.setTextColor(Color.parseColor("#26C6DA"))
                         buttonResend?.isEnabled = true
                         buttonResend?.isClickable = true
+                        buttonResend?.setBackgroundColor(Color.parseColor("#E6FFFFFF"))
+                        buttonResend?.setTextColor(Color.parseColor("#26C6DA"))
+
                     }
                 }
                 timer.start()
-
             }
-
-
         }
+    }
+
+    private fun addUser(firstName: String, fatherName: String, familyName: String, phoneNumber: String, password: String) {
+        // Create new user at /users/$userid
+
+        //the root reference
+        val rootRef = Firebase.database.reference
+        //create the push key
+        val key = rootRef.child("user_id").push().key
+        //if error generating the key
+        if (key == null) {
+            Log.w(TAG, "Error registering please try again later ")
+            return
+        }
+
+        val user = User(firstName, fatherName, familyName, phoneNumber, password)
+        val userValues = user.toMap()
+
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/users/$key"] = userValues
+
+        rootRef.updateChildren(childUpdates)
     }
 
     companion object {

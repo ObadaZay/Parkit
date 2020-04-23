@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.just.parkit.SplashActivity.Companion.familyName
 import com.just.parkit.SplashActivity.Companion.fatherName
 import com.just.parkit.SplashActivity.Companion.firstName
@@ -20,15 +23,27 @@ class SignupActivity : AppCompatActivity() {
     var check3: Int? = 2 //0 means missing data, 1 means successful, 2 means not changed value
     var check4: Int? = 2 //0 means missing data, 1 means successful, 2 means not changed value
 
+    // [START declare_auth]
+    private lateinit var auth: FirebaseAuth
+    // [END declare_auth]
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+
+        // [START initialize_auth]
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+        // [END initialize_auth]
 
         //get sharedpref instance
         prefs = this.getSharedPreferences(prefsFileName, Context.MODE_PRIVATE)
 
         //when next button is clicked
         bu_signup_next.setOnClickListener {
+
+
 
             //call this function which checks for errors of user input
             checkUser()
@@ -41,6 +56,10 @@ class SignupActivity : AppCompatActivity() {
             else if (check1 == 1 && check2 == 1 && check3 == 1 && check4 == 1) {
                 //call saveUser() Function to save the user unitl registration is complete
                 saveUser()
+
+                //take the user to phone signup auth activity
+                val intent = Intent(baseContext, SignupAuthActivity::class.java)
+                startActivity(intent)
             }
             else {
                 Toast.makeText(applicationContext, "Register Error, please try again later :(", Toast.LENGTH_LONG).show()
