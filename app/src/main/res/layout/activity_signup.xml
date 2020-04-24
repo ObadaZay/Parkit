@@ -143,6 +143,7 @@
                     android:ems="10"
                     android:hint="@string/signup_password_hint"
                     android:inputType="textPassword"
+                    android:maxLength="15"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#FFFFFF"
                     android:textSize="21sp"

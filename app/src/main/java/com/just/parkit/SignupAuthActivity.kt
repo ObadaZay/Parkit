@@ -1,5 +1,6 @@
 package com.just.parkit
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -16,7 +17,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.just.parkit.SplashActivity.Companion.familyName
 import com.just.parkit.SplashActivity.Companion.fatherName
@@ -39,6 +44,8 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
     // [START declare_auth]
     private lateinit var auth: FirebaseAuth
     // [END declare_auth]
+
+    private lateinit var rootRef: DatabaseReference
 
     private var verificationInProgress = false
     private var storedVerificationId: String? = ""
@@ -63,6 +70,11 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
         // [END initialize_auth]
+
+        //initialize the root reference
+        rootRef = Firebase.database.reference
+
+
 
         // Initialize phone auth callbacks
         // [START phone_auth_callbacks]
@@ -89,7 +101,7 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onVerificationFailed(e: FirebaseException) {
                 // This callback is invoked in an invalid request for verification is made,
-                // for instance if the the phone number format is not valid.
+                // for instance if the phone number format is not valid.
                 Log.w(TAG, "onVerificationFailed", e)
                 // [START_EXCLUDE silent]
                 verificationInProgress = false
@@ -139,6 +151,7 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
     // [START on_start_check_user]
     override fun onStart() {
         super.onStart()
+
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         updateUI(currentUser)
@@ -215,6 +228,7 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
                         // The verification code entered was invalid
                         // [START_EXCLUDE silent]
                         fieldVerificationCode.error = "Invalid code."
+                        fieldVerificationCode.requestFocus()
                         // [END_EXCLUDE]
                     }
                     // [START_EXCLUDE silent]
@@ -296,29 +310,23 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
         } else {
             // Signed in
 
-            enableViews(fieldPhoneNumber, fieldVerificationCode)
-            fieldPhoneNumber.text = null
-            fieldVerificationCode.text = null
-
-
             //shared preferences get and initializing
             prefs = this.getSharedPreferences(SplashActivity.prefsFileName, MODE_PRIVATE)
             firstName = prefs!!.getString("firstName", "").toString()
             fatherName = prefs!!.getString("fatherName", "").toString()
             familyName = prefs!!.getString("familyName", "").toString()
             password = prefs!!.getString("password", "").toString()
-            phone = fieldPhoneNumber.text.toString()
+            phone = fieldPhoneNumber.text.toString().replaceFirst("^0|962".toRegex(), "+962")
             prefs?.edit()?.putString("phone", phone)?.apply()
             phone = prefs!!.getString("phone", "").toString()
 
+            var passPhone = "$password,$phone"
+
             //add the user to firebase
-            addUser(firstName,fatherName, familyName, phone, password)
-            //todo make adduser to firebase here and delay and take him to main or don't save anything and takehim to login
+            addUser(firstName,fatherName, familyName, phone, password, passPhone)
 
 
-            //todo when you create signupactivity don't forget to save all vars in sharedpref
 
-            //detail.text = getString(R.string.firebase_status_fmt, user.uid)
         }
     }
 
@@ -326,6 +334,7 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
         val phoneNumber = fieldPhoneNumber.text.toString()
         if (TextUtils.isEmpty(phoneNumber)) {
             fieldPhoneNumber.error = "Invalid phone number."
+            fieldPhoneNumber.requestFocus()
             return false
         }
 
@@ -418,11 +427,9 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     //add the users to firebase function
-    private fun addUser(firstName: String, fatherName: String, familyName: String, phoneNumber: String, password: String) {
+    private fun addUser(firstName: String, fatherName: String, familyName: String, phoneNumber: String, password: String, passPhone: String) {
 
         // Create new user at /users/$userid
-        //the root reference
-        val rootRef = Firebase.database.reference
         //create the push key
         val key = rootRef.child("user_id").push().key
         //if error generating the key
@@ -433,8 +440,9 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         //initialize the values and convert them to hash map type
-        val user = User(firstName, fatherName, familyName, phoneNumber, password)
+        val user = User(firstName, fatherName, familyName, phoneNumber, password,passPhone)
         val userValues = user.toMap()
+
 
         //define the updates variable
         val childUpdates = HashMap<String, Any>()
@@ -444,8 +452,15 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
             .addOnSuccessListener {
                 // Write was successful!
                 userState = "1"
-
                 Toast.makeText(applicationContext, "Account created successfully ^_^", Toast.LENGTH_LONG).show()
+
+                auth.signOut()
+                userState = "0"
+
+                updateUI(STATE_INITIALIZED)
+                //change state to signed out and take user to login activity
+                val intent = Intent(baseContext, LoginActivity::class.java)
+                startActivity(intent)
             }
             .addOnFailureListener {
                 // Write failed

@@ -15,10 +15,10 @@ class SplashActivity : AppCompatActivity() {
         val prefsFileName = "com.just.parkit.prefs"
         var prefs: SharedPreferences? = null
 
-        // define var for signup sucess
+        // define var for user State
         //0 means fail or signed out, 1 means success
         //2 means he entered phone and waiting for verification message, 3 means he is logged in
-        var userState: String? = null
+        var userState = "4"
 
 
         //user firstName
@@ -58,8 +58,7 @@ class SplashActivity : AppCompatActivity() {
 
         //sharedpreferences get
         prefs = this.getSharedPreferences(prefsFileName, MODE_PRIVATE)
-        userState = prefs!!.getString("signupresult", "")
-        userState = prefs!!.getString("signupsuccess", "")
+        userState = prefs!!.getString("userState", "").toString()
 
     }
 

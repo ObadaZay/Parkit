@@ -40,11 +40,12 @@ class SignupActivity : AppCompatActivity() {
         //get sharedpref instance
         prefs = this.getSharedPreferences(prefsFileName, Context.MODE_PRIVATE)
 
+        bu_login_in_signup.setOnClickListener {
+            val intent = Intent(baseContext, LoginActivity::class.java)
+            startActivity(intent)
+        }
         //when next button is clicked
         bu_signup_next.setOnClickListener {
-
-
-
             //call this function which checks for errors of user input
             checkUser()
 

@@ -10,7 +10,8 @@ data class User(
     var fatherName: String? = "",
     var familyName: String? = "",
     var phoneNumber: String? = "",
-    var password: String? = ""
+    var password: String? = "",
+    var passPhone: String ? = ""
 ) {
 
     // [START user_to_map]
@@ -21,8 +22,10 @@ data class User(
             "fatherName" to fatherName,
             "familyName" to familyName,
             "phoneNumber" to phoneNumber,
-            "password" to password
-        )
+            "password" to password,
+            "passPhone" to passPhone
+
+            )
     }
     // [END user_to_map]
 }
