@@ -32,16 +32,6 @@ class SplashActivity : AppCompatActivity() {
         //user phonenumber
         var phone = "null"
 
-        //user db firstName
-        var dbfirstName = "null"
-        //user db fatherName
-        var dbfatherName = "null"
-        //user db familyName
-        var dbfamilyName = "null"
-        //user db password
-        var dbpassword = "null"
-        //user db phonenumber
-        var dbphone = "null"
     }
 
 
