@@ -312,18 +312,22 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
 
             //shared preferences get and initializing
             prefs = this.getSharedPreferences(SplashActivity.prefsFileName, MODE_PRIVATE)
+
+
             firstName = prefs!!.getString("firstName", "").toString()
             fatherName = prefs!!.getString("fatherName", "").toString()
             familyName = prefs!!.getString("familyName", "").toString()
             password = prefs!!.getString("password", "").toString()
+
             phone = fieldPhoneNumber.text.toString().replaceFirst("^0|962".toRegex(), "+962")
             prefs?.edit()?.putString("phone", phone)?.apply()
+
             phone = prefs!!.getString("phone", "").toString()
 
             var passPhone = "$password,$phone"
 
             //add the user to firebase
-            addUser(firstName,fatherName, familyName, phone, password, passPhone)
+            addUser(firstName, fatherName, familyName, phone, password, passPhone)
 
 
 
@@ -429,6 +433,8 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
     //add the users to firebase function
     private fun addUser(firstName: String, fatherName: String, familyName: String, phoneNumber: String, password: String, passPhone: String) {
 
+        //todo check if user exist
+
         // Create new user at /users/$userid
         //create the push key
         val key = rootRef.child("user_id").push().key
@@ -453,11 +459,10 @@ class SignupAuthActivity : AppCompatActivity(), View.OnClickListener {
                 // Write was successful!
                 userState = "1"
                 Toast.makeText(applicationContext, "Account created successfully ^_^", Toast.LENGTH_LONG).show()
-
                 auth.signOut()
                 userState = "0"
-
                 updateUI(STATE_INITIALIZED)
+
                 //change state to signed out and take user to login activity
                 val intent = Intent(baseContext, LoginActivity::class.java)
                 startActivity(intent)

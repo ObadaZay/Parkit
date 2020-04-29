@@ -129,44 +129,6 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
 
-                    for (userSnapshot in dataSnapshot.children) {
-                        val user: User? = userSnapshot.getValue(User::class.java)
-                        userList.add(user)
-
-                        if (user?.phoneNumber.isNullOrEmpty())
-                        {
-                            //error
-                            Toast.makeText(applicationContext, "please make sure you both phone and password are correct!", Toast.LENGTH_LONG).show()
-                        }
-
-                        else {
-                            //do other login stuff here
-                            //save the data of these fields at these variables
-                            firstName = user?.firstName.toString()
-                            fatherName = user?.firstName.toString()
-                            familyName = user?.firstName.toString()
-                            phone = user?.password.toString()
-                            password = user?.firstName.toString()
-                            passPhone = user?.passPhone.toString()
-
-                            //put the data inside shared pref to use it later
-                            prefs?.edit()?.putString("firstName", firstName)?.apply()
-                            prefs?.edit()?.putString("fatherName", fatherName)?.apply()
-                            prefs?.edit()?.putString("familyName", familyName)?.apply()
-                            prefs?.edit()?.putString("password", password)?.apply()
-                            prefs?.edit()?.putString("phone", phone)?.apply()
-                            prefs?.edit()?.putString("passPhone", passPhone)?.apply()
-
-                            Toast.makeText(applicationContext, "Hey ${user?.firstName}, Welcome Back!", Toast.LENGTH_LONG).show()
-
-                            //take user to main activity
-                            val intent = Intent(baseContext, MainActivity::class.java)
-                            startActivity(intent)
-                        }
-
-
-                    }
-
 
                 }
                 override fun onCancelled(databaseError: DatabaseError) {

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.just.parkit.R
+import com.just.parkit.SplashActivity
+import com.just.parkit.SplashActivity.Companion.firstName
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
@@ -24,5 +27,7 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        firstName = SplashActivity.prefs!!.getString("firstName", "").toString()
+        tv_main_welcome.text = "Welcome Back " + firstName + " ^^"
     }
 }

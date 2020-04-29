@@ -54,6 +54,7 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Please double check that you filled all the fields correctly ^ ^", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+
             else if (check1 == 1 && check2 == 1 && check3 == 1 && check4 == 1) {
                 //call saveUser() Function to save the user unitl registration is complete
                 saveUser()
@@ -62,6 +63,7 @@ class SignupActivity : AppCompatActivity() {
                 val intent = Intent(baseContext, SignupAuthActivity::class.java)
                 startActivity(intent)
             }
+
             else {
                 Toast.makeText(applicationContext, "Register Error, please try again later :(", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
@@ -98,6 +100,7 @@ class SignupActivity : AppCompatActivity() {
             }
         }
 
+
         if (et_family_name.text.isNullOrEmpty()) {
             et_family_name.error = "You can't leave this field empty"
             et_family_name.requestFocus()
@@ -122,6 +125,7 @@ class SignupActivity : AppCompatActivity() {
             }
         }
 
+
         if (et_father_name.text.isNullOrEmpty()) {
             et_father_name.error = "You can't leave this field empty"
             et_father_name.requestFocus()
@@ -145,6 +149,7 @@ class SignupActivity : AppCompatActivity() {
                 }
             }
         }
+
 
         if (et_first_name.text.isNullOrEmpty()) {
             et_first_name.error = "You can't leave this field empty"
