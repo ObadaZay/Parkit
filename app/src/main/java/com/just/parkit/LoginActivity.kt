@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(baseContext, SignupActivity::class.java)
             startActivity(intent)
         }
+
         bu_login.setOnClickListener{
 
             //check for empty fields
@@ -106,10 +107,10 @@ class LoginActivity : AppCompatActivity() {
                                 //do other login stuff here
                                 //save the data of these fields at these variables
                                 firstName = user?.firstName.toString()
-                                fatherName = user?.firstName.toString()
-                                familyName = user?.firstName.toString()
-                                phone = user?.password.toString()
-                                password = user?.firstName.toString()
+                                fatherName = user?.fatherName.toString()
+                                familyName = user?.familyName.toString()
+                                phone = user?.phoneNumber.toString()
+                                password = user?.password.toString()
                                 passPhone = user?.passPhone.toString()
 
                                 //put the data inside shared pref to use it later

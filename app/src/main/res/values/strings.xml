@@ -29,6 +29,11 @@
     <string name="main_text_welcome">Welcome Back ^^</string>
     <string name="bu_find_parking">Reserve Your Parking Spot Now!</string>
     <string name="main_how_to">It\'s simple:\n1-Click On the button below\n2-Select the time you wish to start your reservation\n3-get your code and remember it (you will use it later)\n4-when you want to check out go to checkout\nand that\'s it ^^</string>
+    <string name="spots_count">Remaining Free Spots: </string>
+    <string name="main_how_to_checkout">If you wish to cancel your reservation please click the cancel button bellow\n\nIf you want to proceed to Checkout click checkout button bellow</string>
+    <string name="bu_cancel_reservation">Cancel</string>
+    <string name="bu_checkout">Checkout</string>
+
 
 
 
