@@ -294,7 +294,14 @@ class HomeFragment : Fragment() {
                         cost = TimeUnit.MILLISECONDS.toSeconds(endTime!!.toLong() - startTime!!.toLong())
                         Toast.makeText(this@HomeFragment.context, "cost: $cost JOD", Toast.LENGTH_LONG).show()
 
-                        //todo change checkout to 1
+                        rootRef.child("parking/users/$phone/checkout").setValue(1).addOnSuccessListener {
+                            //success
+                            //procceed to checkout
+                            cost = TimeUnit.MILLISECONDS.toSeconds(endTime!!.toLong() - startTime!!.toLong())
+                            Toast.makeText(this@HomeFragment.context, "cost: $cost JOD", Toast.LENGTH_LONG).show()
+
+                            showReserve()
+                        }
                     }
 
                     else{
