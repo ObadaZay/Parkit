@@ -2,7 +2,9 @@ package com.just.parkit.ui.home
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,7 @@ class HomeFragment : Fragment() {
     var startTime: String? = null
     var endTime: String? = null
     var cost: Long? = null
+    var checkoutvalue: String? = "a"
 
 
 
@@ -276,6 +279,28 @@ class HomeFragment : Fragment() {
             })
     }
 
+private fun checkoutDone(){
+    rootRef.child("parking/users/$phone/checkout").addListenerForSingleValueEvent(
+        object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Data object and use the values to update the UI
+                // ...
+                checkoutvalue = dataSnapshot.value.toString()
+                if (checkoutvalue.equals("null")){
+                    //if no entry
+                    showReserve()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Data failed, log a message
+                Log.w(TAG, "LoginData:onCancelled", databaseError.toException())
+                // ...
+                Toast.makeText(this@HomeFragment.context, "Error! can't retrieve you data, please check your internet and try again later", Toast.LENGTH_LONG).show()
+            }
+        })
+}
+
 
     private fun checkout() {
         //get user status to check if he is in the parking spot or not
@@ -300,7 +325,39 @@ class HomeFragment : Fragment() {
                             cost = TimeUnit.MILLISECONDS.toSeconds(endTime!!.toLong() - startTime!!.toLong())
                             Toast.makeText(this@HomeFragment.context, "cost: $cost JOD", Toast.LENGTH_LONG).show()
 
-                            showReserve()
+                            //start timer for resend
+                            val timer = object: CountDownTimer(15000, 10) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    tv_main_reserved.text = "Spot open for: " + millisUntilFinished / 1000 + " Secs"
+                                    bu_checkout?.setBackgroundColor(Color.parseColor("#8BFFFFFF"))
+                                    bu_checkout?.setTextColor(Color.parseColor("#8526C6DA"))
+                                    bu_checkout?.isEnabled = false
+                                    bu_checkout?.isClickable = false
+
+                                    bu_cancel_reservation?.setBackgroundColor(Color.parseColor("#8BFFFFFF"))
+                                    bu_cancel_reservation?.setTextColor(Color.parseColor("#8526C6DA"))
+                                    bu_cancel_reservation?.isEnabled = false
+                                    bu_cancel_reservation?.isClickable = false
+                                }
+
+                                override fun onFinish() {
+                                    tv_main_reserved.text = "Welcome Back $firstName ^^"
+                                    bu_checkout?.setBackgroundColor(Color.parseColor("#E6FFFFFF"))
+                                    bu_checkout?.setTextColor(Color.parseColor("#26C6DA"))
+                                    bu_checkout?.isEnabled = true
+                                    bu_checkout?.isClickable = true
+
+                                    bu_cancel_reservation?.setBackgroundColor(Color.parseColor("#E6FFFFFF"))
+                                    bu_cancel_reservation?.setTextColor(Color.parseColor("#26C6DA"))
+                                    bu_cancel_reservation?.isEnabled = true
+                                    bu_cancel_reservation?.isClickable = true
+                                    checkoutDone()
+
+                                }
+                            }
+                            timer.start()
+                            //showReserve()
+
                         }
                     }
 
