@@ -57,62 +57,19 @@ class SplashActivity : AppCompatActivity() {
 
         //check if user signup is successful if its not take him through the signup form else take him to the main activity
 
-        if (userState.isNullOrEmpty() || userState == "0" || userState == "2" || userState.isNullOrEmpty()) {
+        //the delay on splash and goto first activity
+        val background = object : Thread() {
+            override fun run() {
+                try {
+                    Thread.sleep(4000)
 
-            //the delay on splash and goto first activity
-            val background = object : Thread() {
-                override fun run() {
-                    try {
-                        Thread.sleep(4000)
-
-                        //todo it was first activity
-                        val intent = Intent(baseContext, MainActivity::class.java)
-                        startActivity(intent)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                    val intent = Intent(baseContext, LoginActivity::class.java)
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
-            background.start()
-
         }
-
-        else if (userState == "2") {
-
-            //the delay on splash and goto auth activity
-            val background = object : Thread() {
-                override fun run() {
-                    try {
-                        Thread.sleep(2000)
-
-                        //todo this was phoneauth activity
-                        val intent = Intent(baseContext, MainActivity::class.java)
-                        startActivity(intent)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-            background.start()
-
-        }
-
-        else {
-
-            //the delay on splash and goto main activity
-            val background = object : Thread() {
-                override fun run() {
-                    try {
-                        Thread.sleep(2000)
-
-                        val intent = Intent(baseContext, MainActivity::class.java)
-                        startActivity(intent)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-            background.start()
-        }
+        background.start()
     }
 }
